@@ -49,6 +49,12 @@ public class Contact {
     private Instant updatedAt;
 
     public void addEmail(ContactEmail email) {
+        if (email.getContact() == this) {
+            return;
+        }
+        if (email.getContact() != null) {
+            email.getContact().emails.remove(email); // detach from old parent
+        }
         emails.add(email);
         email.setContact(this);
     }
@@ -60,6 +66,12 @@ public class Contact {
     }
 
     public void addPhone(ContactPhone phone) {
+        if (phone.getContact() == this) {
+            return;
+        }
+        if (phone.getContact() != null) {
+            phone.getContact().phones.remove(phone);
+        }
         phones.add(phone);
         phone.setContact(this);
     }
