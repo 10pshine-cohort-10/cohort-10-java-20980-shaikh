@@ -54,8 +54,9 @@ public class Contact {
     }
 
     public void removeEmail(ContactEmail email) {
-        emails.remove(email);
-        email.setContact(null);
+        if (emails.remove(email)) {
+            email.setContact(null);
+        }
     }
 
     public void addPhone(ContactPhone phone) {
@@ -64,8 +65,9 @@ public class Contact {
     }
 
     public void removePhone(ContactPhone phone) {
-        phones.remove(phone);
-        phone.setContact(null);
+        if (phones.remove(phone)) {
+            phone.setContact(null);
+        }
     }
 
     @PrePersist
