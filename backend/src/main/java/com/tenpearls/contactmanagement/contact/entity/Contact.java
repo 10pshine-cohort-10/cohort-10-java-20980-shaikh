@@ -49,13 +49,12 @@ public class Contact {
     private Instant updatedAt;
 
     public void addEmail(ContactEmail email) {
-        if (email.getContact() == this) {
-            return;
+        if (email.getContact() != null && email.getContact() != this) {
+            email.getContact().emails.remove(email);
         }
-        if (email.getContact() != null) {
-            email.getContact().emails.remove(email); // detach from old parent
+        if (!emails.contains(email)) {
+            emails.add(email);
         }
-        emails.add(email);
         email.setContact(this);
     }
 
@@ -66,13 +65,12 @@ public class Contact {
     }
 
     public void addPhone(ContactPhone phone) {
-        if (phone.getContact() == this) {
-            return;
+        if (phone.getContact() != null && phone.getContact() != this) {
+            phone.getContact().phones.remove(phone); // detach from old parent
         }
-        if (phone.getContact() != null) {
-            phone.getContact().phones.remove(phone);
+        if (!phones.contains(phone)) {               // guard on the collection
+            phones.add(phone);
         }
-        phones.add(phone);
         phone.setContact(this);
     }
 
