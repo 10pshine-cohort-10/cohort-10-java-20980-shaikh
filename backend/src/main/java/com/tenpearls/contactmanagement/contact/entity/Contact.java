@@ -49,8 +49,9 @@ public class Contact {
     private Instant updatedAt;
 
     public void addEmail(ContactEmail email) {
-        if (email.getContact() != null && email.getContact() != this) {
-            email.getContact().emails.remove(email);
+        Contact previous = email.getContact();
+        if (previous != null && previous != this) {
+            previous.getEmails().remove(email);   // getter, not field
         }
         if (!emails.contains(email)) {
             emails.add(email);
@@ -65,10 +66,11 @@ public class Contact {
     }
 
     public void addPhone(ContactPhone phone) {
-        if (phone.getContact() != null && phone.getContact() != this) {
-            phone.getContact().phones.remove(phone); // detach from old parent
+        Contact previous = phone.getContact();
+        if (previous != null && previous != this) {
+            previous.getPhones().remove(phone);
         }
-        if (!phones.contains(phone)) {               // guard on the collection
+        if (!phones.contains(phone)) {
             phones.add(phone);
         }
         phone.setContact(this);
